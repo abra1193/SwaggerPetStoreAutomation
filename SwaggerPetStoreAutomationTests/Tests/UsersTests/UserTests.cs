@@ -1,17 +1,23 @@
 ﻿using FluentAssertions;
 using FluentAssertions.AssertMultiple;
+using Serilog;
 using SwaggerPetStoreAutomationAPI.Actions;
+using SwaggerPetStoreAutomationTests.BaseTests;
 using SwaggerPetStoreAutomationTests.SharedSteps;
 using System.Net;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SwaggerPetStoreAutomationTests.UsersTests
 {
-    public class UserTests
+    public class UserTests : BaseClass
     {
+        public UserTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
         [Fact]
         public void VerifyUsersCanLogInAndLogOut()
         {
+            Log.Information("Verify users can logIn/logOut");
             var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
             var userLogIn = UserActions.LogIn(user.Username, user.Password);
             var userLogOut = UserActions.LogOut();
@@ -27,6 +33,7 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
         [Fact]
         public void VerifyUserCreation()
         {
+            Log.Information("Verify users can be created");
             var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
             var userData = UserActions.GetUserByUsername(user.Username);
             AssertMultiple.Multiple(() =>
@@ -46,6 +53,7 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
         [Fact]
         public void UserCRUDTest()
         {
+            Log.Information("Verify users can be created/Updated/Deleted on the aplication");
             var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
             var userData = UserActions.GetUserByUsername(user.Username);
             userData.Id.Should().Be(user.Id);

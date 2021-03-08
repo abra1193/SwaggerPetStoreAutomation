@@ -1,18 +1,23 @@
 using FluentAssertions;
 using FluentAssertions.AssertMultiple;
+using Serilog;
 using SwaggerPetstoreAutomation;
+using SwaggerPetStoreAutomationTests.BaseTests;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace SwaggerPetStoreAutomationTests.PetsTests
 {
-    public class PetsTests
+    public class PetsTests : BaseClass
     {
+        public PetsTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
         [Fact]
         public void PetsCRUDTest()
         {
+            Log.Information("Verify pets can be created/Updated/Deleted on the aplication");
             var newPetAdded = PetsSharedSteps.CreatePet("Cookie", PetStatus.available);
             var newPetData = PetsActions.FindPetById(newPetAdded.Id);
             newPetAdded.Name = "My Sweet Cookie";
@@ -33,14 +38,15 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         [Fact]
         public void VerifyFindPetByStatus()
         {
+            Log.Information("Verify pets can be search by status(available,pending and sold)");
             var responseAvailable = PetsActions.FindPetByStatus(PetStatus.available);
             var responsePending = PetsActions.FindPetByStatus(PetStatus.pending);
             var responseSold = PetsActions.FindPetByStatus(PetStatus.sold);
             AssertMultiple.Multiple(() =>
             {
-                responseAvailable.Should().HaveCountGreaterThan(0);
-                responsePending.Should().HaveCountGreaterThan(0);
-                responseSold.Should().HaveCountGreaterThan(0);
+                responseAvailable.Should().HaveCountGreaterOrEqualTo(0);
+                responsePending.Should().HaveCountGreaterOrEqualTo(0);
+                responseSold.Should().HaveCountGreaterOrEqualTo(0);
                 responseAvailable.ForEach(x => x.Status.Should().Be(PetStatus.available.ToString()));
                 responsePending.ForEach(x => x.Status.Should().Be(PetStatus.pending.ToString()));
                 responseSold.ForEach(x => x.Status.Should().Be(PetStatus.sold.ToString()));
@@ -50,6 +56,7 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         [Fact]
         public void VerifyFindPetByTags()
         {
+            Log.Information("Verify pets can be search by different tags");
             var petTag = "tag1";
             var response = PetsActions.FindPetByTags(petTag);
             AssertMultiple.Multiple(() =>
@@ -62,6 +69,7 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         [Fact]
         public void VerifyUploadAnImageToAPet()
         {
+            Log.Information("Verify images can be upload to pet entities");
             var newPet = PetsSharedSteps.InitializePet("Cake", PetStatus.available);
             newPet.PhotoUrls = new List<string> { };
             PetsActions.AddNewPetToStore(newPet);

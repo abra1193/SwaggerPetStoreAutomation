@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
+using Serilog;
 using SwaggerPetstoreAutomation;
 using SwaggerPetStoreAutomationAPI.Entities;
+using System;
 using System.Net;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
