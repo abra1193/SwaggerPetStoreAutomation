@@ -1,8 +1,7 @@
-﻿using FluentAssertions;
+﻿using System.Net;
+using FluentAssertions;
 using SwaggerPetstoreAutomation;
 using SwaggerPetStoreAutomationAPI.Entities;
-using System.Collections.Generic;
-using System.Net;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
 {
