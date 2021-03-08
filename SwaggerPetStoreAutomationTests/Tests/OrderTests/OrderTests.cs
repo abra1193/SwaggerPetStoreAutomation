@@ -24,7 +24,7 @@ namespace SwaggerPetStoreAutomationTests.StoreTests
             var orderCreated = OrderSharedSteps.CreateOrder(pet.Id, DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fff+00:00"), OrderStatus.delivered, 1, true);
             orderCreated.Complete.Should().BeTrue();
             var response = OrderActions.PetInventoryByStatus();
-            response.Approved.Should().BeGreaterThan(50);
+            response.Approved.Should().BeGreaterOrEqualTo(50);
         }
 
         [Fact]

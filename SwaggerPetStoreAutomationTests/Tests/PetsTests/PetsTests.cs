@@ -73,7 +73,7 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
             var newPet = PetsSharedSteps.InitializePet("Cake", PetStatus.available);
             newPet.PhotoUrls = new List<string> { };
             PetsActions.AddNewPetToStore(newPet);
-            var file = File.ReadAllBytes("Resources\\UploadPhoto.png");
+            var file = File.ReadAllBytes("Resources//UploadPhoto.png");
             var response = PetsActions.UploadAnImageToAPet(newPet.Id, file);
             response.PhotoUrls[0].Should().NotBeNullOrEmpty();
         }
