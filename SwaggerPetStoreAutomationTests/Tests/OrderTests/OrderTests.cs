@@ -30,7 +30,7 @@ namespace SwaggerPetStoreAutomationTests.StoreTests
         [Fact]
         public void OrderCRUDTest()
         {
-            Log.Information("Verify Order can be created/Updated/Deleted on the aplication");
+            Log.Information("Verify Order can be created/Updated/Deleted");
             var pet = PetsSharedSteps.CreatePet("Jelly", PetStatus.available);
             var orderCreated = OrderSharedSteps.CreateOrder(pet.Id, DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fff+00:00"), OrderStatus.placed, 1, true);
             orderCreated.Complete.Should().BeTrue();

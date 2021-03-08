@@ -17,7 +17,7 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         [Fact]
         public void PetsCRUDTest()
         {
-            Log.Information("Verify pets can be created/Updated/Deleted on the aplication");
+            Log.Information("Verify pets can be created/Updated/Deleted");
             var newPetAdded = PetsSharedSteps.CreatePet("Cookie", PetStatus.available);
             var newPetData = PetsActions.FindPetById(newPetAdded.Id);
             newPetAdded.Name = "My Sweet Cookie";
@@ -69,7 +69,7 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         [Fact]
         public void VerifyUploadAnImageToAPet()
         {
-            Log.Information("Verify images can be upload to pet entities");
+            Log.Information("Verify images can be uploaded to pet entities");
             var newPet = PetsSharedSteps.InitializePet("Cake", PetStatus.available);
             newPet.PhotoUrls = new List<string> { };
             PetsActions.AddNewPetToStore(newPet);

@@ -53,7 +53,7 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
         [Fact]
         public void UserCRUDTest()
         {
-            Log.Information("Verify users can be created/Updated/Deleted on the aplication");
+            Log.Information("Verify users can be created/Updated/Deleted");
             var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
             var userData = UserActions.GetUserByUsername(user.Username);
             userData.Id.Should().Be(user.Id);
