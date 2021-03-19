@@ -7,7 +7,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
 {
     public class UserActions
     {
-        public static Users CreateUser(Users body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public Users CreateUser(Users body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl("user");
@@ -18,7 +18,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return rawRequest.GetResponseContent<Users>(response);
         }
 
-        public static string LogIn(string userName, string password, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public string LogIn(string userName, string password, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl($"user/login?username={userName}&password={password}");
@@ -28,7 +28,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return response.Content;
         }
 
-        public static string LogOut(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public string LogOut(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl("user/logout");
@@ -38,7 +38,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return response.Content;
         }
 
-        public static Users GetUserByUsername(string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public Users GetUserByUsername(string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl($"user/{userName}");
@@ -48,7 +48,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return rawRequest.GetResponseContent<Users>(response);
         }
 
-        public static Users UpdateUser(Users body, string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public Users UpdateUser(Users body, string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl($"user/{userName}");
@@ -59,7 +59,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return rawRequest.GetResponseContent<Users>(response);
         }
 
-        public static string DeleteUser(string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public string DeleteUser(string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl($"user/{userName}");

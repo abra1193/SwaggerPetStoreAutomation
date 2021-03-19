@@ -8,9 +8,9 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Xunit.Abstractions;
 
-namespace SwaggerPetStoreAutomationTests.BaseTests
+namespace SwaggerPetStoreAutomationAPI
 {
-    internal static class LoggingHelper
+    public class LoggingHelper
     {
         private static readonly Subject<LogEvent> s_logEventSubject = new Subject<LogEvent>();
         private const string CaptureCorrelationIdKey = "CaptureCorrelationId";
@@ -18,7 +18,7 @@ namespace SwaggerPetStoreAutomationTests.BaseTests
         private static readonly MessageTemplateTextFormatter s_formatter = new MessageTemplateTextFormatter(
             "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}", null);
 
-        static LoggingHelper()
+        public LoggingHelper()
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
@@ -28,7 +28,7 @@ namespace SwaggerPetStoreAutomationTests.BaseTests
                 .CreateLogger();
         }
 
-        public static IDisposable Capture(ITestOutputHelper testOutputHelper)
+        public IDisposable Capture(ITestOutputHelper testOutputHelper)
         {
             var captureId = Guid.NewGuid();
 
@@ -66,7 +66,5 @@ namespace SwaggerPetStoreAutomationTests.BaseTests
                 _action();
             }
         }
-
-
     }
 }

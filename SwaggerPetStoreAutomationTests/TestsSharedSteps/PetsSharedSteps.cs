@@ -1,32 +1,32 @@
 ﻿using SwaggerPetstoreAutomation;
-using System;
-using System.Collections.Generic;
+using SwaggerPetStoreAutomationAPI.Actions;
+using SwaggerPetStoreAutomationAPI.Helpers;
 
-namespace SwaggerPetStoreAutomationTests
+namespace SwaggerPetStoreAutomationTests.SharedSteps
 {
-    public class PetsSharedSteps
+    public class PetsSharedSteps : PetsActions
     {
-        public static Pets InitializePet(string name, PetStatus petStatus)
+
+        public Pets InitializePet(string name, PetStatus petStatus)
         {
-            var random = new Random();
             return new Pets()
             {
-                Id = random.Next(1, 100),
+                Id = int.Parse(Randomizer.GenerateRandomId()),
                 Name = name,
                 Status = petStatus.ToString(),
                 Category = new Category()
                 {
-                    Id = random.Next(1, 100),
-                    Name = "Test Category Name"
+                    Id = int.Parse(Randomizer.GenerateRandomId()),
+                    Name = Randomizer.GenerateRandomString()
                 }
             };
         }
 
-        public static Pets CreatePet(string name, PetStatus petStatus, Pets pet = null)
+        public Pets CreatePet(string name, PetStatus petStatus, Pets pet = null)
         {
             var petToCreate = pet;
             if (petToCreate == null) petToCreate = InitializePet(name, petStatus);
-            return PetsActions.AddNewPetToStore(petToCreate);
+            return AddNewPetToStore(petToCreate);
         }
     }
 }

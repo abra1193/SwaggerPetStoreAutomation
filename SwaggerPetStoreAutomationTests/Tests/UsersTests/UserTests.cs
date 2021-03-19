@@ -1,10 +1,9 @@
-﻿using FluentAssertions;
+﻿using System.Net;
+using FluentAssertions;
 using FluentAssertions.AssertMultiple;
 using Serilog;
-using SwaggerPetStoreAutomationAPI.Actions;
 using SwaggerPetStoreAutomationTests.BaseTests;
 using SwaggerPetStoreAutomationTests.SharedSteps;
-using System.Net;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -12,15 +11,16 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
 {
     public class UserTests : BaseClass
     {
+
         public UserTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
         [Fact]
         public void VerifyUsersCanLogInAndLogOut()
         {
             Log.Information("Verify users can logIn/logOut");
-            var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
-            var userLogIn = UserActions.LogIn(user.Username, user.Password);
-            var userLogOut = UserActions.LogOut();
+            var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");
+            string userLogIn = Actions.UserActions.LogIn(user.Username, user.Password);
+            var userLogOut = Actions.UserActions.LogOut();
             AssertMultiple.Multiple(() =>
             {
                 userLogIn.Should().NotBeNullOrEmpty();
@@ -34,8 +34,8 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
         public void VerifyUserCreation()
         {
             Log.Information("Verify users can be created");
-            var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
-            var userData = UserActions.GetUserByUsername(user.Username);
+            var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");
+            var userData = Actions.UserActions.GetUserByUsername(user.Username);
             AssertMultiple.Multiple(() =>
             {
                 userData.Should().NotBeNull();
@@ -54,14 +54,14 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
         public void UserCRUDTest()
         {
             Log.Information("Verify users can be created/Updated/Deleted");
-            var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
-            var userData = UserActions.GetUserByUsername(user.Username);
+            var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");
+            var userData = Actions.UserActions.GetUserByUsername(user.Username);
             userData.Id.Should().Be(user.Id);
             user.Password = "MyNewPassword@!";
-            UserActions.UpdateUser(user, user.Username);
-            var updateUser = UserActions.GetUserByUsername(user.Username);
+            Actions.UserActions.UpdateUser(user, user.Username);
+            var updateUser = Actions.UserActions.GetUserByUsername(user.Username);
             updateUser.Password.Should().Be(user.Password);
-            UserActions.DeleteUser(user.Username, HttpStatusCode.OK);
+            Actions.UserActions.DeleteUser(user.Username, HttpStatusCode.OK);
         }
     }
 }

@@ -1,25 +1,26 @@
-﻿using SwaggerPetStoreAutomationTests.Logging;
-using System;
+﻿using System;
+using SwaggerPetStoreAutomationAPI;
+using SwaggerPetStoreAutomationAPI.Actions;
 using Xunit.Abstractions;
 
 namespace SwaggerPetStoreAutomationTests.BaseTests
 {
-    public class BaseClass : IDisposable
+    public abstract class BaseClass : IDisposable
     {
-        private readonly ILog Logger;
-        protected readonly ITestOutputHelper output;
-        protected readonly IDisposable _logCapture;
+        private readonly ITestOutputHelper _output;
+        protected IDisposable logCapture;
+        internal readonly ActionFactory Actions = new ActionFactory();
+        internal readonly SharedStepFactory SharedSteps = new SharedStepFactory();
 
-        public BaseClass(ITestOutputHelper outputHelper)
+        protected BaseClass(ITestOutputHelper outputHelper)
         {
-            output = outputHelper;
-            _logCapture = LoggingHelper.Capture(outputHelper);
-            Logger = LogProvider.GetLogger(GetType().ToString());
+            _output = outputHelper;
+            logCapture = new LoggingHelper().Capture(_output);
         }
 
         public void Dispose()
         {
-            _logCapture.Dispose();
+            logCapture.Dispose();
         }
     }
 }

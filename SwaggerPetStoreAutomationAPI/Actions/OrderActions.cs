@@ -1,13 +1,13 @@
-﻿using FluentAssertions;
+﻿using System.Net;
+using FluentAssertions;
 using SwaggerPetstoreAutomation;
 using SwaggerPetStoreAutomationAPI.Entities;
-using System.Net;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
 {
     public class OrderActions
     {
-        public static Order PlaceAnOrderForAPet(Order body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public Order PlaceAnOrderForAPet(Order body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Order>();
             var url = rawRequest.SetUrl("store/order");
@@ -18,7 +18,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return rawRequest.GetResponseContent<Order>(response);
         }
 
-        public static PetInventoryStatus PetInventoryByStatus(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public PetInventoryStatus PetInventoryByStatus(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<PetInventoryStatus>();
             var url = rawRequest.SetUrl("store/inventory");
@@ -28,9 +28,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return rawRequest.GetResponseContent<PetInventoryStatus>(response);
         }
 
-        public static string DeletePurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public string DeletePurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
-            var rawRequest = new PetStoreController<Users>();
+            var rawRequest = new PetStoreController<Order>();
             var url = rawRequest.SetUrl($"store/order/{orderId}");
             var request = rawRequest.PrepareDELETERequest();
             var response = rawRequest.GetResponse(url, request);
@@ -38,9 +38,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return response.Content;
         }
 
-        public static Order FindPurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public Order FindPurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
-            var rawRequest = new PetStoreController<Users>();
+            var rawRequest = new PetStoreController<Order>();
             var url = rawRequest.SetUrl($"store/order/{orderId}");
             var request = rawRequest.PrepareGETRequest();
             var response = rawRequest.GetResponse(url, request);

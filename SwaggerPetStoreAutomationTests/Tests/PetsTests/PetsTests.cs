@@ -18,13 +18,13 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         public void PetsCRUDTest()
         {
             Log.Information("Verify pets can be created/Updated/Deleted");
-            var newPetAdded = PetsSharedSteps.CreatePet("Cookie", PetStatus.available);
-            var newPetData = PetsActions.FindPetById(newPetAdded.Id);
+            var newPetAdded = SharedSteps.PetsSharedSteps.CreatePet("Cookie", PetStatus.available);
+            var newPetData = Actions.PetsActions.FindPetById(newPetAdded.Id);
             newPetAdded.Name = "My Sweet Cookie";
-            var updatePetData = PetsActions.UpdateAnExistingPet(newPetAdded);
-            var updatePet = PetsActions.FindPetById(newPetAdded.Id);
+            var updatePetData = Actions.PetsActions.UpdateAnExistingPet(newPetAdded);
+            var updatePet = Actions.PetsActions.FindPetById(newPetAdded.Id);
             updatePet.Name.Should().Be(updatePetData.Name);
-            var deletedPetMessage = PetsActions.DeleteAPet(newPetAdded.Id);
+            var deletedPetMessage = Actions.PetsActions.DeleteAPet(newPetAdded.Id);
             AssertMultiple.Multiple(() =>
             {
                 newPetData.Id.Should().Be(newPetAdded.Id);
@@ -39,9 +39,9 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         public void VerifyFindPetByStatus()
         {
             Log.Information("Verify pets can be search by status(available,pending and sold)");
-            var responseAvailable = PetsActions.FindPetByStatus(PetStatus.available);
-            var responsePending = PetsActions.FindPetByStatus(PetStatus.pending);
-            var responseSold = PetsActions.FindPetByStatus(PetStatus.sold);
+            var responseAvailable = Actions.PetsActions.FindPetByStatus(PetStatus.available);
+            var responsePending = Actions.PetsActions.FindPetByStatus(PetStatus.pending);
+            var responseSold = Actions.PetsActions.FindPetByStatus(PetStatus.sold);
             AssertMultiple.Multiple(() =>
             {
                 responseAvailable.Should().HaveCountGreaterOrEqualTo(0);
@@ -58,7 +58,7 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         {
             Log.Information("Verify pets can be search by different tags");
             var petTag = "tag1";
-            var response = PetsActions.FindPetByTags(petTag);
+            var response = Actions.PetsActions.FindPetByTags(petTag);
             AssertMultiple.Multiple(() =>
             {
                 response.Should().HaveCountGreaterThan(0);
@@ -70,11 +70,11 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
         public void VerifyUploadAnImageToAPet()
         {
             Log.Information("Verify images can be uploaded to pet entities");
-            var newPet = PetsSharedSteps.InitializePet("Cake", PetStatus.available);
+            var newPet = SharedSteps.PetsSharedSteps.InitializePet("Cake", PetStatus.available);
             newPet.PhotoUrls = new List<string> { };
-            PetsActions.AddNewPetToStore(newPet);
+            Actions.PetsActions.AddNewPetToStore(newPet);
             var file = File.ReadAllBytes("Resources//UploadPhoto.png");
-            var response = PetsActions.UploadAnImageToAPet(newPet.Id, file);
+            var response = Actions.PetsActions.UploadAnImageToAPet(newPet.Id, file);
             response.PhotoUrls[0].Should().NotBeNullOrEmpty();
         }
     }
