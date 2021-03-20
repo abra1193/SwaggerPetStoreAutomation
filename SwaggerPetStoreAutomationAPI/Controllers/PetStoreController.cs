@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 using RestSharp;
+using Serilog;
 
 namespace SwaggerPetstoreAutomation
 {

@@ -16,7 +16,7 @@ namespace SwaggerPetStoreAutomationAPI
         private const string CaptureCorrelationIdKey = "CaptureCorrelationId";
 
         private static readonly MessageTemplateTextFormatter s_formatter = new MessageTemplateTextFormatter(
-            "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}", null);
+            "{Message}", null);
 
         public LoggingHelper()
         {

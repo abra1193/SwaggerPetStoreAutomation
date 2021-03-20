@@ -44,9 +44,9 @@ namespace SwaggerPetStoreAutomationTests.PetsTests
             var responseSold = Actions.PetsActions.FindPetByStatus(PetStatus.sold);
             AssertMultiple.Multiple(() =>
             {
-                responseAvailable.Should().HaveCountGreaterOrEqualTo(0);
-                responsePending.Should().HaveCountGreaterOrEqualTo(0);
-                responseSold.Should().HaveCountGreaterOrEqualTo(0);
+                responseAvailable.Should().HaveCountGreaterThan(0);
+                responsePending.Should().HaveCountGreaterThan(0);
+                responseSold.Should().HaveCountGreaterThan(0);
                 responseAvailable.ForEach(x => x.Status.Should().Be(PetStatus.available.ToString()));
                 responsePending.ForEach(x => x.Status.Should().Be(PetStatus.pending.ToString()));
                 responseSold.ForEach(x => x.Status.Should().Be(PetStatus.sold.ToString()));
