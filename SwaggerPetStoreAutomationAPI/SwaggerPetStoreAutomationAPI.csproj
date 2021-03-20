@@ -11,7 +11,6 @@
     <Folder Include="Handlers\" />
     <Folder Include="JsonModels\" />
     <Folder Include="Resources\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>

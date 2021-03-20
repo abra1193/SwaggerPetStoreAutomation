@@ -2,6 +2,7 @@
 using FluentAssertions;
 using SwaggerPetstoreAutomation;
 using SwaggerPetStoreAutomationAPI.Entities;
+using SwaggerPetStoreAutomationAPI.Helpers;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
 {
@@ -10,7 +11,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Users CreateUser(Users body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
-            var url = rawRequest.SetUrl("user");
+            var url = rawRequest.SetUrl(PetStoreUrls.CreateUser);
             var jsonBody = JsonHandler.Serialize(body);
             var request = rawRequest.PreparePOSTRequest(jsonBody);
             var response = rawRequest.GetResponse(url, request);
@@ -21,8 +22,10 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public string LogIn(string userName, string password, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
-            var url = rawRequest.SetUrl($"user/login?username={userName}&password={password}");
+            var url = rawRequest.SetUrl(PetStoreUrls.LogInUser);
             var request = rawRequest.PrepareGETRequest();
+            request.AddQueryParameter("username",userName);
+            request.AddQueryParameter("password", password);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return response.Content;
@@ -31,7 +34,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public string LogOut(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
-            var url = rawRequest.SetUrl("user/logout");
+            var url = rawRequest.SetUrl(PetStoreUrls.LogOutUser);
             var request = rawRequest.PrepareGETRequest();
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
@@ -41,8 +44,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Users GetUserByUsername(string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
-            var url = rawRequest.SetUrl($"user/{userName}");
+            var url = rawRequest.SetUrl(PetStoreUrls.GetUserByUsername);
             var request = rawRequest.PrepareGETRequest();
+            request.AddUrlSegment("username", userName);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return rawRequest.GetResponseContent<Users>(response);
@@ -51,9 +55,10 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Users UpdateUser(Users body, string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
-            var url = rawRequest.SetUrl($"user/{userName}");
+            var url = rawRequest.SetUrl(PetStoreUrls.GetUserByUsername);
             var jsonBody = JsonHandler.Serialize(body);
             var request = rawRequest.PreparePUTRequest(jsonBody);
+            request.AddUrlSegment("username", userName);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return rawRequest.GetResponseContent<Users>(response);
@@ -62,8 +67,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public string DeleteUser(string userName, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
-            var url = rawRequest.SetUrl($"user/{userName}");
+            var url = rawRequest.SetUrl(PetStoreUrls.GetUserByUsername);
             var request = rawRequest.PrepareDELETERequest();
+            request.AddUrlSegment("username", userName);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return response.Content;

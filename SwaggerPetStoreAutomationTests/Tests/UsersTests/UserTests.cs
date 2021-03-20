@@ -1,9 +1,8 @@
-﻿using System.Net;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.AssertMultiple;
 using Serilog;
 using SwaggerPetStoreAutomationTests.BaseTests;
-using SwaggerPetStoreAutomationTests.SharedSteps;
+using System.Net;
 using Xunit;
 using Xunit.Abstractions;
 

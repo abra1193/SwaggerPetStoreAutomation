@@ -1,7 +1,8 @@
-﻿using System.Net;
-using FluentAssertions;
+﻿using FluentAssertions;
 using SwaggerPetstoreAutomation;
 using SwaggerPetStoreAutomationAPI.Entities;
+using SwaggerPetStoreAutomationAPI.Helpers;
+using System.Net;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
 {
@@ -10,7 +11,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Order PlaceAnOrderForAPet(Order body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Order>();
-            var url = rawRequest.SetUrl("store/order");
+            var url = rawRequest.SetUrl(PetStoreUrls.PlaceAnOrderForAPet);
             var jsonBody = JsonHandler.Serialize(body);
             var request = rawRequest.PreparePOSTRequest(jsonBody);
             var response = rawRequest.GetResponse(url, request);
@@ -21,7 +22,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public PetInventoryStatus PetInventoryByStatus(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<PetInventoryStatus>();
-            var url = rawRequest.SetUrl("store/inventory");
+            var url = rawRequest.SetUrl(PetStoreUrls.PetInventoryByStatus);
             var request = rawRequest.PrepareGETRequest();
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
@@ -31,8 +32,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public string DeletePurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Order>();
-            var url = rawRequest.SetUrl($"store/order/{orderId}");
+            var url = rawRequest.SetUrl(PetStoreUrls.DeletePurchaseOrderById);
             var request = rawRequest.PrepareDELETERequest();
+            request.AddUrlSegment("orderId",orderId);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return response.Content;
@@ -41,8 +43,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Order FindPurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Order>();
-            var url = rawRequest.SetUrl($"store/order/{orderId}");
+            var url = rawRequest.SetUrl(PetStoreUrls.DeletePurchaseOrderById);
             var request = rawRequest.PrepareGETRequest();
+            request.AddUrlSegment("orderId", orderId);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return rawRequest.GetResponseContent<Order>(response);

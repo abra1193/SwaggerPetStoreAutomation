@@ -1,5 +1,4 @@
-﻿using System;
-using SwaggerPetStoreAutomationAPI.Actions;
+﻿using SwaggerPetStoreAutomationAPI.Actions;
 using SwaggerPetStoreAutomationAPI.Entities;
 using SwaggerPetStoreAutomationAPI.Helpers;
 
@@ -9,7 +8,6 @@ namespace SwaggerPetStoreAutomationTests.SharedSteps
     {
         public Users InitializeUser(string firstName, string lastName, string userName)
         {
-            var random = new Random();
             return new Users()
             {
                 Id = int.Parse(Randomizer.GenerateRandomId()),

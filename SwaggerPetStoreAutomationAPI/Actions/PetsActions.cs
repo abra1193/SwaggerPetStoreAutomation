@@ -2,6 +2,7 @@
 using System.Net;
 using FluentAssertions;
 using SwaggerPetstoreAutomation;
+using SwaggerPetStoreAutomationAPI.Helpers;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
 {
@@ -10,8 +11,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Pets FindPetById(int petId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Pets>();
-            var url = rawRequest.SetUrl($"pet/{petId}");
+            var url = rawRequest.SetUrl(PetStoreUrls.FindPetById);
             var request = rawRequest.PrepareGETRequest();
+            request.AddUrlSegment("petId", petId);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return rawRequest.GetResponseContent<Pets>(response);
@@ -20,7 +22,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Pets AddNewPetToStore(Pets body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Pets>();
-            var url = rawRequest.SetUrl("pet");
+            var url = rawRequest.SetUrl(PetStoreUrls.AddNewPetToStore);
             var jsonBody = JsonHandler.Serialize(body);
             var request = rawRequest.PreparePOSTRequest(jsonBody);
             var response = rawRequest.GetResponse(url, request);
@@ -31,7 +33,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Pets UpdateAnExistingPet(Pets body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Pets>();
-            var url = rawRequest.SetUrl("pet");
+            var url = rawRequest.SetUrl(PetStoreUrls.AddNewPetToStore);
             var jsonBody = JsonHandler.Serialize(body);
             var request = rawRequest.PreparePUTRequest(jsonBody);
             var response = rawRequest.GetResponse(url, request);
@@ -42,8 +44,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public string DeleteAPet(int petId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Pets>();
-            var url = rawRequest.SetUrl($"pet/{petId}");
+            var url = rawRequest.SetUrl(PetStoreUrls.FindPetById);
             var request = rawRequest.PrepareDELETERequest();
+            request.AddUrlSegment("petId", petId);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return response.Content;
@@ -52,8 +55,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public List<Pets> FindPetByStatus(PetStatus petStatus, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Pets>();
-            var url = rawRequest.SetUrl($"pet/findByStatus?status={petStatus}");
+            var url = rawRequest.SetUrl(PetStoreUrls.FindPetByStatus);
             var request = rawRequest.PrepareGETRequest();
+            request.AddQueryParameter("status", petStatus.ToString());
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return rawRequest.GetResponseContent<List<Pets>>(response);
@@ -62,8 +66,9 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public List<Pets> FindPetByTags(string petTags, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Pets>();
-            var url = rawRequest.SetUrl($"pet/findByTags?tags={petTags}");
+            var url = rawRequest.SetUrl(PetStoreUrls.FindPetByTags);
             var request = rawRequest.PrepareGETRequest();
+            request.AddQueryParameter("tags", petTags.ToString());
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return rawRequest.GetResponseContent<List<Pets>>(response);
@@ -72,9 +77,10 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         public Pets UploadAnImageToAPet(int petId, byte[] file, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Pets>();
-            var url = rawRequest.SetUrl($"pet/{petId}/uploadImage");
+            var url = rawRequest.SetUrl(PetStoreUrls.UploadAnImageToAPet);
             var request = rawRequest.PreparePOSTRequest(file);
             request.AddHeader("Content-Type", "application/octet-stream");
+            request.AddUrlSegment("petId", petId);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             return rawRequest.GetResponseContent<Pets>(response);
