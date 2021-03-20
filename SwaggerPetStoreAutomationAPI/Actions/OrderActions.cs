@@ -35,8 +35,6 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
-            Log.Information("-------------------------------Body--------------------------");
-            if (request.Body != null) Log.Information(JToken.Parse(request.Body.Value.ToString()).ToString(Formatting.Indented));
             Log.Information("-------------------------------Response--------------------------");
             if (response.Content != null) Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
             return rawRequest.GetResponseContent<PetInventoryStatus>(response);
@@ -65,8 +63,6 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
-            Log.Information("-------------------------------Body--------------------------");
-            if (request.Body != null) Log.Information(JToken.Parse(request.Body.Value.ToString()).ToString(Formatting.Indented));
             Log.Information("-------------------------------Response--------------------------");
             if (response.Content != null) Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
             return rawRequest.GetResponseContent<Order>(response);
