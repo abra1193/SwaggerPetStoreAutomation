@@ -8,10 +8,10 @@ namespace SwaggerPetstoreAutomation
         [JsonProperty("id", Required = Required.Always)]
         public int Id { get; set; }
 
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonProperty("name", Required = Required.Default)]
         public string Name { get; set; }
 
-        [JsonProperty("category", Required = Required.Always)]
+        [JsonProperty("category", Required = Required.Default)]
         public Category Category { get; set; }
 
         [JsonProperty("photoUrls", Required = Required.Default)]

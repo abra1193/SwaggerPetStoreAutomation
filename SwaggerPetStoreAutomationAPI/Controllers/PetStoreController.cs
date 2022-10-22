@@ -10,7 +10,7 @@ namespace SwaggerPetstoreAutomation
         public RestClient restClient;
         public RestRequest restRequest;
 
-        public string baseUrl = "http://localhost:8080/api/v3/";
+        public string baseUrl = "https://petstore3.swagger.io/api/v3/";
 
         public RestClient SetUrl(string endpoint)
         {
