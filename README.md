@@ -8,10 +8,11 @@ The tests were created with a functional testing approach,on every test run some
 
 # Project Solution
 <div style="text-align: justify">
-This project is divided in one class library(SwaggerPetStoreAutomationAPI) where are located Actions(Endpoint raw call and responses),Controller(Rest client and Rest Request),Entities(Json converted to Objects),Handlers(Json Serialize and Parse),JsonModels(Json Models for each api entity),Resources(miscellaneous files to test file uplad on endpoints)
-and Helpers(LoggingHelper)folders and in one test class(SwaggerPetStoreAutomationTests) where are located BaseTests(Base Class),Test(Test to be executed in this project) and TestSharedSteps(Object initialization and endpoint calls abstracted on methods) folders,each of this folders 
+This project is divided in one class library(SwaggerPetStoreAutomationAPI) where are located Actions(Endpoint raw call and responses),Controller(Rest client and Rest Request),Entities(Json converted to Objects),Handlers(Json Serialize and Parse),JsonModels(Json Models for each api entity),Resources(miscellaneous files to test file uplad on endpoints) and Helpers(LoggingHelper)folders and in one test class(SwaggerPetStoreAutomationTests) where are located BaseTests(Base Class),Test(Test to be executed in this project) and TestSharedSteps(Object initialization and endpoint calls abstracted on methods) folders,each of this folders 
 represent an abstraction layer.
+</div>
 
+<div style="text-align: justify">
 This type of solution was used for better code reusability,maintainability of the testing framework.
 </div>
 
@@ -24,10 +25,13 @@ This type of solution was used for better code reusability,maintainability of th
 <div style="text-align: justify">
 This project is developed using C# with .NET Core,XUnit as the testing framework and RestSharp as my .NET client for the APIs.
 </div>
+
 <div style="text-align: justify">
 I decided to utilize C# along with Restsharp because this library it's one of the best and easy to use libraries to handle REST api in .NET,it allows you to serialize/deserialize Json as Objects easily and also RestSharp support all the HTTP methods(GET, PUT, HEAD, POST, DELETE and OPTIONS).
+</div>
 
-I also utilize .NET Core so this project can have the Ability to run on Windows, macOS, and Linux and Xunit since this is one of the .NET Frameworks that is far more flexible and extensible than others .Net Unit test frameworks.
+<div style="text-align: justify">
+I also utilized .NET Core so this project can have the Ability to run on Windows, macOS, and Linux and Xunit since this is one of the .NET Frameworks that is far more flexible and extensible than others .Net Unit test frameworks.
 </div>
 
 # Scenarios covered on the solution
