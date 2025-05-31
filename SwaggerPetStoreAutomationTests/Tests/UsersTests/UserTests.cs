@@ -3,6 +3,7 @@ using FluentAssertions;
 using FluentAssertions.AssertMultiple;
 using Serilog;
 using SwaggerPetStoreAutomationTests.BaseTests;
+using SwaggerPetStoreAutomationTests.TestsSharedSteps;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -17,7 +18,7 @@ namespace SwaggerPetStoreAutomationTests.Tests.UsersTests
         public void VerifyUsersCanLogInAndLogOut()
         {
             Log.Information("Verify users can logIn/logOut");
-            var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");
+            var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
             var userLogIn = Actions.UserActions.LogIn(user.Username, user.Password);
             var userLogOut = Actions.UserActions.LogOut();
             AssertMultiple.Multiple(() =>
@@ -33,7 +34,7 @@ namespace SwaggerPetStoreAutomationTests.Tests.UsersTests
         public void VerifyUserCreation()
         {
             Log.Information("Verify users can be created");
-            var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");
+            var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
             var userData = Actions.UserActions.GetUserByUsername(user.Username);
             AssertMultiple.Multiple(() =>
             {
@@ -53,7 +54,7 @@ namespace SwaggerPetStoreAutomationTests.Tests.UsersTests
         public void UserCrudTest()
         {
             Log.Information("Verify users can be created/Updated/Deleted");
-            var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");
+            var user = UserSharedSteps.CreateUser("firstName", "lastName", "userName");
             var userData = Actions.UserActions.GetUserByUsername(user.Username);
             userData.Id.Should().Be(user.Id);
             user.Password = "MyNewPassword@!";

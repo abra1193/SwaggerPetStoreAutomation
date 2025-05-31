@@ -8,7 +8,7 @@ namespace SwaggerPetStoreAutomationTests.TestsSharedSteps
     {
         private static Users InitializeUser(string firstName, string lastName, string userName)
         {
-            return new Users()
+            return new Users
             {
                 Id = int.Parse(Randomizer.GenerateRandomId()),
                 FirstName = firstName,
@@ -21,10 +21,9 @@ namespace SwaggerPetStoreAutomationTests.TestsSharedSteps
             };
         }
 
-        public Users CreateUser(string firstName, string lastName, string userName,Users user = null)
+        public static Users CreateUser(string firstName, string lastName, string userName,Users user = null)
         {
-            var userToCreate = user;
-            if (userToCreate == null) userToCreate = InitializeUser(firstName, lastName, userName);
+            var userToCreate = user ?? InitializeUser(firstName, lastName, userName);
             return CreateUser(userToCreate);
         }
     }
