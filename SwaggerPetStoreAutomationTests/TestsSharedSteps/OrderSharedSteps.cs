@@ -2,12 +2,11 @@
 using SwaggerPetStoreAutomationAPI.Entities;
 using SwaggerPetStoreAutomationAPI.Helpers;
 
-namespace SwaggerPetStoreAutomationTests.SharedSteps
+namespace SwaggerPetStoreAutomationTests.TestsSharedSteps
 {
     public class OrderSharedSteps : OrderActions
     {
-
-        public Order InitializeOrder(int petId, string shipDate, OrderStatus orderStatus, int quantity, bool complete)
+        private static Order InitializeOrder(int petId, string shipDate, OrderStatus orderStatus, int quantity, bool complete)
         {
             return new Order()
             {
@@ -22,8 +21,7 @@ namespace SwaggerPetStoreAutomationTests.SharedSteps
 
         public Order CreateOrder(int petId, string shipDate, OrderStatus orderStatus, int quantity, bool complete, Order order = null)
         {
-            var orderToCreate = order;
-            if (orderToCreate == null) orderToCreate = InitializeOrder(petId, shipDate, orderStatus, quantity, complete);
+            var orderToCreate = order ?? InitializeOrder(petId, shipDate, orderStatus, quantity, complete);
             return PlaceAnOrderForAPet(orderToCreate);
         }
     }

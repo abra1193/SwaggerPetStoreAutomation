@@ -25,8 +25,8 @@ namespace SwaggerPetStoreAutomationAPI.Entities
 
     public enum OrderStatus
     {
-        placed,
-        approved,
-        delivered
+        Placed,
+        Approved,
+        Delivered
     }
 }

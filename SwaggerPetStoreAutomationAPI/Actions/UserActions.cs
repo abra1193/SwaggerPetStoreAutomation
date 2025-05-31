@@ -3,27 +3,28 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
-using SwaggerPetstoreAutomation;
+using SwaggerPetStoreAutomationAPI.Controllers;
 using SwaggerPetStoreAutomationAPI.Entities;
+using SwaggerPetStoreAutomationAPI.Handlers;
 using SwaggerPetStoreAutomationAPI.Helpers;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
 {
     public class UserActions
     {
-        public Users CreateUser(Users body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        protected static Users CreateUser(Users body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl(PetStoreUrls.CreateUser);
             var jsonBody = JsonHandler.Serialize(body);
-            var request = rawRequest.PreparePOSTRequest(jsonBody);
+            var request = rawRequest.PreparePostRequest(jsonBody);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
             Log.Information("-------------------------------Body--------------------------");
-            if (request.Body != null) Log.Information(JToken.Parse(request.Body.Value.ToString()).ToString(Formatting.Indented));
+            Log.Information(JToken.Parse(request.Body.Value.ToString()!).ToString(Formatting.Indented));
             Log.Information("-------------------------------Response--------------------------");
-            if (response.Content != null) Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
+            Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
             return rawRequest.GetResponseContent<Users>(response);
         }
 
@@ -31,14 +32,14 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl(PetStoreUrls.LogInUser);
-            var request = rawRequest.PrepareGETRequest();
+            var request = rawRequest.PrepareGetRequest();
             request.AddQueryParameter("username",userName);
             request.AddQueryParameter("password", password);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
             Log.Information("-------------------------------Response--------------------------");
-            if (response.Content != null) Log.Information(response.Content);
+            Log.Information(response.Content);
             return response.Content;
         }
 
@@ -46,12 +47,12 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl(PetStoreUrls.LogOutUser);
-            var request = rawRequest.PrepareGETRequest();
+            var request = rawRequest.PrepareGetRequest();
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
             Log.Information("-------------------------------Response--------------------------");
-            if (response.Content != null) Log.Information(response.Content);
+            Log.Information(response.Content);
             return response.Content;
         }
 
@@ -59,13 +60,13 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl(PetStoreUrls.GetUserByUsername);
-            var request = rawRequest.PrepareGETRequest();
+            var request = rawRequest.PrepareGetRequest();
             request.AddUrlSegment("username", userName);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
             Log.Information("-------------------------------Response--------------------------");
-            if (response.Content != null) Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
+            Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
             return rawRequest.GetResponseContent<Users>(response);
         }
 
@@ -74,15 +75,15 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl(PetStoreUrls.GetUserByUsername);
             var jsonBody = JsonHandler.Serialize(body);
-            var request = rawRequest.PreparePUTRequest(jsonBody);
+            var request = rawRequest.PreparePutRequest(jsonBody);
             request.AddUrlSegment("username", userName);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
             Log.Information("-------------------------------Body--------------------------");
-            if (request.Body != null) Log.Information(JToken.Parse(request.Body.Value.ToString()).ToString(Formatting.Indented));
+            Log.Information(JToken.Parse(request.Body.Value.ToString()).ToString(Formatting.Indented));
             Log.Information("-------------------------------Response--------------------------");
-            if (response.Content != null) Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
+            Log.Information(JToken.Parse(response.Content).ToString(Formatting.Indented));
             return rawRequest.GetResponseContent<Users>(response);
         }
 
@@ -90,13 +91,13 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Users>();
             var url = rawRequest.SetUrl(PetStoreUrls.GetUserByUsername);
-            var request = rawRequest.PrepareDELETERequest();
+            var request = rawRequest.PrepareDeleteRequest();
             request.AddUrlSegment("username", userName);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
             Log.Information("-------------------------------Response--------------------------");
-            if (response.Content != null) Log.Information(response.Content);
+            Log.Information(response.Content);
             return response.Content;
         }
     }

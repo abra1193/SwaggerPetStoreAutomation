@@ -1,12 +1,12 @@
-﻿using FluentAssertions;
+﻿using System.Net;
+using FluentAssertions;
 using FluentAssertions.AssertMultiple;
 using Serilog;
 using SwaggerPetStoreAutomationTests.BaseTests;
-using System.Net;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace SwaggerPetStoreAutomationTests.UsersTests
+namespace SwaggerPetStoreAutomationTests.Tests.UsersTests
 {
     public class UserTests : BaseClass
     {
@@ -18,7 +18,7 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
         {
             Log.Information("Verify users can logIn/logOut");
             var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");
-            string userLogIn = Actions.UserActions.LogIn(user.Username, user.Password);
+            var userLogIn = Actions.UserActions.LogIn(user.Username, user.Password);
             var userLogOut = Actions.UserActions.LogOut();
             AssertMultiple.Multiple(() =>
             {
@@ -50,7 +50,7 @@ namespace SwaggerPetStoreAutomationTests.UsersTests
         }
 
         [Fact]
-        public void UserCRUDTest()
+        public void UserCrudTest()
         {
             Log.Information("Verify users can be created/Updated/Deleted");
             var user = SharedSteps.UserSharedSteps.CreateUser("firstName", "lastName", "userName");

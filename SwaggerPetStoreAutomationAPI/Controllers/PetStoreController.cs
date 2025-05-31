@@ -1,32 +1,31 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 using RestSharp;
-using Serilog;
 
-namespace SwaggerPetstoreAutomation
+namespace SwaggerPetStoreAutomationAPI.Controllers
 {
     public class PetStoreController<T>
     {
-        public RestClient restClient;
-        public RestRequest restRequest;
+        public RestClient RestClient;
+        public RestRequest RestRequest;
 
-        public string baseUrl = "https://petstore3.swagger.io/api/v3/";
+        private const string BaseUrl = "https://petstore3.swagger.io/api/v3/";
 
         public RestClient SetUrl(string endpoint)
         {
-            var url = Path.Combine(baseUrl, endpoint);
+            var url = Path.Combine(BaseUrl, endpoint);
             var restClient = new RestClient(url);
             return restClient;
         }
 
-        public RestRequest PrepareGETRequest()
+        public RestRequest PrepareGetRequest()
         {
             var restRequest = new RestRequest(Method.GET);
             restRequest.AddHeader("Accept", "application/json");
             return restRequest;
         }
 
-        public RestRequest PreparePOSTRequest(dynamic requestBody)
+        public RestRequest PreparePostRequest(dynamic requestBody)
         {
             var restRequest = new RestRequest(Method.POST);
             restRequest.AddHeader("Accept", "application/json");
@@ -34,7 +33,7 @@ namespace SwaggerPetstoreAutomation
             return restRequest;
         }
 
-        public RestRequest PreparePUTRequest(string requestBody)
+        public RestRequest PreparePutRequest(string requestBody)
         {
             var restRequest = new RestRequest(Method.PUT);
             restRequest.AddHeader("Accept", "application/json");
@@ -42,7 +41,7 @@ namespace SwaggerPetstoreAutomation
             return restRequest;
         }
 
-        public RestRequest PrepareDELETERequest()
+        public RestRequest PrepareDeleteRequest()
         {
             var restRequest = new RestRequest(Method.DELETE);
             restRequest.AddHeader("Accept", "application/json");
@@ -54,10 +53,10 @@ namespace SwaggerPetstoreAutomation
             return client.Execute(request);
         }
 
-        public Entities GetResponseContent<Entities>(IRestResponse response)
+        public TEntities GetResponseContent<TEntities>(IRestResponse response)
         {
             var content = response.Content;
-            Entities entitiesObject = JsonConvert.DeserializeObject<Entities>(content);
+            var entitiesObject = JsonConvert.DeserializeObject<TEntities>(content);
             return entitiesObject;
         }
     }

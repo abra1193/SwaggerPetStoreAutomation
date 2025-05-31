@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 
-namespace SwaggerPetStoreAutomationAPI
+namespace SwaggerPetStoreAutomationAPI.Handlers
 {
     public static class JsonHandler
     {

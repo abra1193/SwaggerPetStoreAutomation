@@ -1,4 +1,4 @@
-﻿using SwaggerPetStoreAutomationTests.SharedSteps;
+﻿using SwaggerPetStoreAutomationTests.TestsSharedSteps;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
 {

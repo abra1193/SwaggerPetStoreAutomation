@@ -1,8 +1,8 @@
-﻿using SwaggerPetstoreAutomation;
-using SwaggerPetStoreAutomationAPI.Actions;
+﻿using SwaggerPetStoreAutomationAPI.Actions;
+using SwaggerPetStoreAutomationAPI.Entities;
 using SwaggerPetStoreAutomationAPI.Helpers;
 
-namespace SwaggerPetStoreAutomationTests.SharedSteps
+namespace SwaggerPetStoreAutomationTests.TestsSharedSteps
 {
     public class PetsSharedSteps : PetsActions
     {

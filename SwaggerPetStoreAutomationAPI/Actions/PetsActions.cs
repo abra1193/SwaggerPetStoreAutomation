@@ -4,7 +4,9 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
-using SwaggerPetstoreAutomation;
+using SwaggerPetStoreAutomationAPI.Controllers;
+using SwaggerPetStoreAutomationAPI.Entities;
+using SwaggerPetStoreAutomationAPI.Handlers;
 using SwaggerPetStoreAutomationAPI.Helpers;
 
 namespace SwaggerPetStoreAutomationAPI.Actions
@@ -15,7 +17,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Pets>();
             var url = rawRequest.SetUrl(PetStoreUrls.FindPetById);
-            var request = rawRequest.PrepareGETRequest();
+            var request = rawRequest.PrepareGetRequest();
             request.AddUrlSegment("petId", petId);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
@@ -30,7 +32,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             var rawRequest = new PetStoreController<Pets>();
             var url = rawRequest.SetUrl(PetStoreUrls.AddNewPetToStore);
             var jsonBody = JsonHandler.Serialize(body);
-            var request = rawRequest.PreparePOSTRequest(jsonBody);
+            var request = rawRequest.PreparePostRequest(jsonBody);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
@@ -46,7 +48,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             var rawRequest = new PetStoreController<Pets>();
             var url = rawRequest.SetUrl(PetStoreUrls.AddNewPetToStore);
             var jsonBody = JsonHandler.Serialize(body);
-            var request = rawRequest.PreparePUTRequest(jsonBody);
+            var request = rawRequest.PreparePutRequest(jsonBody);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
             Log.Information(request.Method.ToString() + " " + response.ResponseUri.OriginalString);
@@ -61,7 +63,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Pets>();
             var url = rawRequest.SetUrl(PetStoreUrls.FindPetById);
-            var request = rawRequest.PrepareDELETERequest();
+            var request = rawRequest.PrepareDeleteRequest();
             request.AddUrlSegment("petId", petId);
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
@@ -75,7 +77,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Pets>();
             var url = rawRequest.SetUrl(PetStoreUrls.FindPetByStatus);
-            var request = rawRequest.PrepareGETRequest();
+            var request = rawRequest.PrepareGetRequest();
             request.AddQueryParameter("status", petStatus.ToString());
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
@@ -89,7 +91,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Pets>();
             var url = rawRequest.SetUrl(PetStoreUrls.FindPetByTags);
-            var request = rawRequest.PrepareGETRequest();
+            var request = rawRequest.PrepareGetRequest();
             request.AddQueryParameter("tags", petTags.ToString());
             var response = rawRequest.GetResponse(url, request);
             response.StatusCode.Should().Be(expectedStatusCode);
@@ -103,7 +105,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
         {
             var rawRequest = new PetStoreController<Pets>();
             var url = rawRequest.SetUrl(PetStoreUrls.UploadAnImageToAPet);
-            var request = rawRequest.PreparePOSTRequest(file);
+            var request = rawRequest.PreparePostRequest(file);
             request.AddHeader("Content-Type", "application/octet-stream");
             request.AddUrlSegment("petId", petId);
             var response = rawRequest.GetResponse(url, request);

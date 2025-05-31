@@ -2,11 +2,11 @@
 using SwaggerPetStoreAutomationAPI.Entities;
 using SwaggerPetStoreAutomationAPI.Helpers;
 
-namespace SwaggerPetStoreAutomationTests.SharedSteps
+namespace SwaggerPetStoreAutomationTests.TestsSharedSteps
 {
     public class UserSharedSteps : UserActions
     {
-        public Users InitializeUser(string firstName, string lastName, string userName)
+        private static Users InitializeUser(string firstName, string lastName, string userName)
         {
             return new Users()
             {

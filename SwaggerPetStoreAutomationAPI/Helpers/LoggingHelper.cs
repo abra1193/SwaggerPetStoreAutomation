@@ -1,18 +1,18 @@
-﻿using Serilog;
-using Serilog.Context;
-using Serilog.Events;
-using Serilog.Formatting.Display;
-using System;
+﻿using System;
 using System.IO;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Serilog;
+using Serilog.Context;
+using Serilog.Events;
+using Serilog.Formatting.Display;
 using Xunit.Abstractions;
 
-namespace SwaggerPetStoreAutomationAPI
+namespace SwaggerPetStoreAutomationAPI.Helpers
 {
     public class LoggingHelper
     {
-        private static readonly Subject<LogEvent> s_logEventSubject = new Subject<LogEvent>();
+        private static readonly Subject<LogEvent> SLogEventSubject = new Subject<LogEvent>();
         private const string CaptureCorrelationIdKey = "CaptureCorrelationId";
 
         private static readonly MessageTemplateTextFormatter s_formatter = new MessageTemplateTextFormatter(
@@ -23,7 +23,7 @@ namespace SwaggerPetStoreAutomationAPI
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .WriteTo
-                .Observers(observable => observable.Subscribe(logEvent => s_logEventSubject.OnNext(logEvent)))
+                .Observers(observable => observable.Subscribe(logEvent => SLogEventSubject.OnNext(logEvent)))
                 .Enrich.FromLogContext()
                 .CreateLogger();
         }
@@ -32,11 +32,7 @@ namespace SwaggerPetStoreAutomationAPI
         {
             var captureId = Guid.NewGuid();
 
-            bool filter(LogEvent logEvent) =>
-                logEvent.Properties.ContainsKey(CaptureCorrelationIdKey) &&
-                logEvent.Properties[CaptureCorrelationIdKey].ToString() == captureId.ToString();
-
-            var subscription = s_logEventSubject.Where(filter).Subscribe(logEvent =>
+            var subscription = SLogEventSubject.Where(Filter).Subscribe(logEvent =>
             {
                 using var writer = new StringWriter();
                 s_formatter.Format(logEvent, writer);
@@ -50,6 +46,10 @@ namespace SwaggerPetStoreAutomationAPI
                 subscription.Dispose();
                 pushProperty.Dispose();
             });
+
+            bool Filter(LogEvent logEvent) =>
+                logEvent.Properties.ContainsKey(CaptureCorrelationIdKey) &&
+                logEvent.Properties[CaptureCorrelationIdKey].ToString() == captureId.ToString();
         }
 
         private class DisposableAction : IDisposable

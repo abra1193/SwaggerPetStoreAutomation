@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace SwaggerPetstoreAutomation
+namespace SwaggerPetStoreAutomationAPI.Entities
 {
     public partial class Pets
     {
