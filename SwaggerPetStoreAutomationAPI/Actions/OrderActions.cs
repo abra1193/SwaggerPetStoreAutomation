@@ -12,7 +12,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
 {
     public class OrderActions
     {
-        public Order PlaceAnOrderForAPet(Order body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        protected static Order PlaceAnOrderForAPet(Order body, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Order>();
             var url = rawRequest.SetUrl(PetStoreUrls.PlaceAnOrderForAPet);
@@ -28,7 +28,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return rawRequest.GetResponseContent<Order>(response);
         }
 
-        public PetInventoryStatus PetInventoryByStatus(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public static PetInventoryStatus PetInventoryByStatus(HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<PetInventoryStatus>();
             var url = rawRequest.SetUrl(PetStoreUrls.PetInventoryByStatus);
@@ -41,7 +41,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return rawRequest.GetResponseContent<PetInventoryStatus>(response);
         }
 
-        public string DeletePurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public static string DeletePurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Order>();
             var url = rawRequest.SetUrl(PetStoreUrls.DeletePurchaseOrderById);
@@ -55,7 +55,7 @@ namespace SwaggerPetStoreAutomationAPI.Actions
             return response.Content;
         }
 
-        public Order FindPurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+        public static Order FindPurchaseOrderById(int orderId, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
         {
             var rawRequest = new PetStoreController<Order>();
             var url = rawRequest.SetUrl(PetStoreUrls.DeletePurchaseOrderById);

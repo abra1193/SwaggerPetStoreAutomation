@@ -9,7 +9,7 @@ namespace SwaggerPetStoreAutomationAPI.Controllers
         public RestClient RestClient;
         public RestRequest RestRequest;
 
-        private const string BaseUrl = "https://petstore3.swagger.io/api/v3/";
+        private const string BaseUrl = "https://petstore3.swagger.io";
 
         public RestClient SetUrl(string endpoint)
         {

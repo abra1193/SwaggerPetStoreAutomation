@@ -15,7 +15,7 @@ namespace SwaggerPetStoreAutomationAPI.Helpers
         private static readonly Subject<LogEvent> SLogEventSubject = new Subject<LogEvent>();
         private const string CaptureCorrelationIdKey = "CaptureCorrelationId";
 
-        private static readonly MessageTemplateTextFormatter s_formatter = new MessageTemplateTextFormatter(
+        private static readonly MessageTemplateTextFormatter SFormatter = new MessageTemplateTextFormatter(
             "{Message}", null);
 
         public LoggingHelper()
@@ -35,7 +35,7 @@ namespace SwaggerPetStoreAutomationAPI.Helpers
             var subscription = SLogEventSubject.Where(Filter).Subscribe(logEvent =>
             {
                 using var writer = new StringWriter();
-                s_formatter.Format(logEvent, writer);
+                SFormatter.Format(logEvent, writer);
                 testOutputHelper.WriteLine(writer.ToString());
                 writer.Close();
             });
