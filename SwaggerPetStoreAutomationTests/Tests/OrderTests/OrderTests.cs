@@ -26,7 +26,7 @@ namespace SwaggerPetStoreAutomationTests.Tests.OrderTests
         }
 
         [Fact]
-        public void OrderCRUDTest()
+        public void OrderCrudTest()
         {
             Log.Information("Verify Order can be created/Updated/Deleted");
             var pet = SharedSteps.PetsSharedSteps.CreatePet("Jelly", PetStatus.available);
